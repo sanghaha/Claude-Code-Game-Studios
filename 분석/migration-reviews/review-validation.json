@@ -1,0 +1,177 @@
+{
+  "date": "2026-11-11",
+  "timezone": "Asia/Seoul",
+  "method": "File-name inventory presence, Markdown local link existence and line bounds, UTF-8 readability, report-summary review, initial target hash comparison. This is not a game build/test or a full implementation audit.",
+  "scopedFiles": 335,
+  "localLinksChecked": 164,
+  "reports": [
+    {
+      "file": "01-file-rules.md",
+      "bytes": 48841,
+      "lines": 226,
+      "links": 66,
+      "missing_links": [],
+      "bad_line_links": [],
+      "coverage": [
+        {
+          "scope": ".claude/rules",
+          "files": 14,
+          "missing_mentions": []
+        }
+      ],
+      "replacement_chars": 0,
+      "japanese_characters": 0
+    },
+    {
+      "file": "02-planning-design.md",
+      "bytes": 67148,
+      "lines": 372,
+      "links": 2,
+      "missing_links": [],
+      "bad_line_links": [],
+      "coverage": [],
+      "replacement_chars": 0,
+      "japanese_characters": 0
+    },
+    {
+      "file": "03-implementation-workflow.md",
+      "bytes": 61574,
+      "lines": 392,
+      "links": 19,
+      "missing_links": [],
+      "bad_line_links": [],
+      "coverage": [],
+      "replacement_chars": 0,
+      "japanese_characters": 0
+    },
+    {
+      "file": "04-artifact-templates.md",
+      "bytes": 59339,
+      "lines": 308,
+      "links": 16,
+      "missing_links": [],
+      "bad_line_links": [],
+      "coverage": [
+        {
+          "scope": ".claude/docs/templates",
+          "files": 74,
+          "missing_mentions": []
+        }
+      ],
+      "replacement_chars": 0,
+      "japanese_characters": 0
+    },
+    {
+      "file": "05-unreal-roles.md",
+      "bytes": 65714,
+      "lines": 305,
+      "links": 55,
+      "missing_links": [],
+      "bad_line_links": [],
+      "coverage": [
+        {
+          "scope": ".claude/agents",
+          "files": 49,
+          "missing_mentions": []
+        }
+      ],
+      "replacement_chars": 0,
+      "japanese_characters": 0
+    },
+    {
+      "file": "06-session-recovery.md",
+      "bytes": 52687,
+      "lines": 352,
+      "links": 6,
+      "missing_links": [],
+      "bad_line_links": [],
+      "coverage": [
+        {
+          "scope": ".claude/hooks",
+          "files": 18,
+          "missing_mentions": []
+        },
+        {
+          "scope": ".claude/scripts",
+          "files": 54,
+          "missing_mentions": []
+        }
+      ],
+      "replacement_chars": 0,
+      "japanese_characters": 0
+    }
+  ],
+  "skillFolderCoverage": [
+    {
+      "report": "02-planning-design.md",
+      "folders": 14,
+      "files": 65,
+      "missingMentions": []
+    },
+    {
+      "report": "03-implementation-workflow.md",
+      "folders": 22,
+      "files": 61,
+      "missingMentions": []
+    }
+  ],
+  "targetObservation": {
+    "existingFilesChecked": 17,
+    "changedExisting": [],
+    "addedObserved": [
+      ".claude/agents/game-designer.md",
+      ".claude/docs/automation-modes.md",
+      ".claude/docs/config-resolution.md",
+      ".claude/docs/director-gates.md",
+      ".claude/docs/error-recovery-protocol.md",
+      ".claude/docs/skill-guide.md",
+      ".claude/docs/workflow-modes.md",
+      ".claude/hooks/yaml-helper.sh",
+      ".claude/rules/coding-standards.md",
+      ".claude/scripts/adr-status.sh",
+      ".claude/scripts/gdd-structure-check.sh",
+      ".claude/scripts/md-section.sh",
+      ".claude/scripts/registry.sh",
+      ".claude/scripts/review-receipts.sh",
+      ".claude/scripts/review-scope.sh",
+      ".claude/docs/director-gates/cd-gdd-align.md",
+      ".claude/docs/director-gates/cd-systems.md",
+      ".claude/docs/director-gates/pr-scope.md",
+      ".claude/docs/director-gates/td-change-impact.md",
+      ".claude/docs/director-gates/td-system-boundary.md",
+      ".claude/docs/templates/architecture-decision-record.md",
+      ".claude/docs/templates/game-design-document.md",
+      ".claude/docs/templates/systems-index.md",
+      ".claude/docs/templates/guidance/game-design-document-guide.md",
+      ".claude/skills/design-review/SKILL.md",
+      ".claude/skills/design-system/SKILL.md",
+      ".claude/skills/map-systems/SKILL.md",
+      ".claude/skills/propagate-design-change/SKILL.md",
+      ".claude/skills/quick-design/SKILL.md",
+      ".claude/skills/review-all-gdds/SKILL.md",
+      ".claude/skills/design-system/references/1-parse-arguments.md",
+      ".claude/skills/design-system/references/2-gather-context.md",
+      ".claude/skills/design-system/references/3-file-skeleton.md",
+      ".claude/skills/design-system/references/4-section-design.md",
+      ".claude/skills/design-system/references/5-post-design.md",
+      ".claude/skills/design-system/references/lens-creative-director.md",
+      ".claude/skills/design-system/references/lens-qa-lead.md",
+      ".claude/skills/design-system/references/lens-specialists.md",
+      ".claude/skills/design-system/references/lens-systems-designer.md",
+      ".claude/skills/review-all-gdds/references/1-load.md",
+      ".claude/skills/review-all-gdds/references/2-consistency.md",
+      ".claude/skills/review-all-gdds/references/3-design-holism.md",
+      ".claude/skills/review-all-gdds/references/4-scenarios.md",
+      ".claude/skills/review-all-gdds/references/5-report.md",
+      ".claude/skills/review-all-gdds/references/6-write.md",
+      ".claude/skills/review-all-gdds/references/7-handoff.md",
+      "Doc/GDD/systems-index.md",
+      "production/session-state/active.md"
+    ]
+  },
+  "sessionTermination": {
+    "normal": 1,
+    "usageLimitAfterReportSaved": 5
+  },
+  "reportStatus": "verified_in_parent"
+}

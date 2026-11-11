@@ -4,6 +4,7 @@
   "sourceRoot": "C:/Users/Sangha_Remote/Documents/Claude-Code-Game-Studios",
   "targetRoot": "C:/Users/Sangha_Remote/Documents/TrackBuilding2",
   "excludedCompletedUnit": "프로젝트 공통 지침",
+  "status": "reports_verified_in_parent",
   "sessions": [
     {
       "unit": "rules",
@@ -11,7 +12,10 @@
       "threadId": "01a1c91e-3a48-7710-89e5-6c135122c4fa",
       "hostId": "local",
       "report": "01-file-rules.md",
-      "status": "running"
+      "reportStatus": "saved_and_verified",
+      "threadTurnStatus": "completed",
+      "threadError": null,
+      "finalVerification": "parent"
     },
     {
       "unit": "planning",
@@ -19,7 +23,10 @@
       "threadId": "01a1c91e-3c90-7a92-97a5-198c383ac5e1",
       "hostId": "local",
       "report": "02-planning-design.md",
-      "status": "running"
+      "reportStatus": "saved_and_verified",
+      "threadTurnStatus": "failed",
+      "threadError": "service_usage_limit",
+      "finalVerification": "parent"
     },
     {
       "unit": "implementation",
@@ -27,7 +34,10 @@
       "threadId": "01a1c91e-3ed4-7400-b291-46ca3c4d0775",
       "hostId": "local",
       "report": "03-implementation-workflow.md",
-      "status": "running"
+      "reportStatus": "saved_and_verified",
+      "threadTurnStatus": "failed",
+      "threadError": "service_usage_limit",
+      "finalVerification": "parent"
     },
     {
       "unit": "templates",
@@ -35,7 +45,10 @@
       "threadId": "01a1c91e-411e-7a23-9ea6-6dc8369774ed",
       "hostId": "local",
       "report": "04-artifact-templates.md",
-      "status": "running"
+      "reportStatus": "saved_and_verified",
+      "threadTurnStatus": "failed",
+      "threadError": "service_usage_limit",
+      "finalVerification": "parent"
     },
     {
       "unit": "roles",
@@ -43,7 +56,10 @@
       "threadId": "01a1c91e-4357-7f71-95f4-1e0af57463b6",
       "hostId": "local",
       "report": "05-unreal-roles.md",
-      "status": "running"
+      "reportStatus": "saved_and_verified",
+      "threadTurnStatus": "failed",
+      "threadError": "service_usage_limit",
+      "finalVerification": "parent"
     },
     {
       "unit": "session",
@@ -51,7 +67,10 @@
       "threadId": "01a1c91e-4695-7df0-8a0c-9fef0c645120",
       "hostId": "local",
       "report": "06-session-recovery.md",
-      "status": "running"
+      "reportStatus": "saved_and_verified",
+      "threadTurnStatus": "failed",
+      "threadError": "service_usage_limit",
+      "finalVerification": "parent"
     }
   ]
 }
