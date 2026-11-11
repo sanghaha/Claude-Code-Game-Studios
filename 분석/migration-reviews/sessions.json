@@ -1,0 +1,57 @@
+{
+  "createdDate": "2026-11-11",
+  "timezone": "Asia/Seoul",
+  "sourceRoot": "C:/Users/Sangha_Remote/Documents/Claude-Code-Game-Studios",
+  "targetRoot": "C:/Users/Sangha_Remote/Documents/TrackBuilding2",
+  "excludedCompletedUnit": "프로젝트 공통 지침",
+  "sessions": [
+    {
+      "unit": "rules",
+      "title": "CCGS 파일별 규칙 이관 분석",
+      "threadId": "01a1c91e-3a48-7710-89e5-6c135122c4fa",
+      "hostId": "local",
+      "report": "01-file-rules.md",
+      "status": "running"
+    },
+    {
+      "unit": "planning",
+      "title": "CCGS 기획·설계 절차 이관 분석",
+      "threadId": "01a1c91e-3c90-7a92-97a5-198c383ac5e1",
+      "hostId": "local",
+      "report": "02-planning-design.md",
+      "status": "running"
+    },
+    {
+      "unit": "implementation",
+      "title": "CCGS 구현 작업 절차 이관 분석",
+      "threadId": "01a1c91e-3ed4-7400-b291-46ca3c4d0775",
+      "hostId": "local",
+      "report": "03-implementation-workflow.md",
+      "status": "running"
+    },
+    {
+      "unit": "templates",
+      "title": "CCGS 산출물 형식 이관 분석",
+      "threadId": "01a1c91e-411e-7a23-9ea6-6dc8369774ed",
+      "hostId": "local",
+      "report": "04-artifact-templates.md",
+      "status": "running"
+    },
+    {
+      "unit": "roles",
+      "title": "CCGS Unreal 전문 역할 이관 분석",
+      "threadId": "01a1c91e-4357-7f71-95f4-1e0af57463b6",
+      "hostId": "local",
+      "report": "05-unreal-roles.md",
+      "status": "running"
+    },
+    {
+      "unit": "session",
+      "title": "CCGS 자동 세션 복원 이관 분석",
+      "threadId": "01a1c91e-4695-7df0-8a0c-9fef0c645120",
+      "hostId": "local",
+      "report": "06-session-recovery.md",
+      "status": "running"
+    }
+  ]
+}
