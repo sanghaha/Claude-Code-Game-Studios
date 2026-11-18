@@ -4,7 +4,7 @@
 > 기준: CCGS v1.3.0 (`abc0de7`). 엔진과 무관한 공통 구성만 다룬다.
 > 상세 근거: [ccgs-adoption-reference.md](ccgs-adoption-reference.md), [migration-reviews/](migration-reviews/README.md)
 
-CCGS는 팀 규모, 리뷰 강도, 문서 깊이를 설정 키로 나눠 두고 49개 역할과 75개 스킬로 넓은 범위를 다룬다. 이 문서는 그중 **혼자 개발할 때 실제로 필요한 것만** 골라 한 곳에 모은다. 아래 내용은 원본 소스를 대조해 정리한 추천이며, 각 구성을 실제 게임에서 실행해 검증한 결과는 아니다.
+CCGS는 팀 규모, 리뷰 강도, 문서 깊이를 설정 키로 나눠 두고 49개 역할과 75개 스킬로 넓은 범위를 다룬다. 이 문서는 그중 **혼자 개발할 때 실제로 필요한 것만** 골라 한 곳에 모은다. 아래 내용은 원본 소스를 대조해 정리한 추천이며, 각 구성을 실제 게임에서 실행해 검증한 결과는 아니다. 예외로 §6의 helper(설정 해석, Story 필드 조회·변경, 체크포인트, 증거 stamp)는 Unreal 5.8 프로젝트에 설치한 뒤 성공 경우와 실패 경우를 모두 실행해 확인했다. Story 하나를 끝까지 진행하는 확인(§10의 3단계)은 아직 하지 않았다.
 
 ---
 
@@ -71,6 +71,8 @@ engine:
   version: "<설치된 버전>"
   language: "<언어>"
   # code_root / test_root: engines.tsv의 기본 경로와 다를 때만 적는다
+  # Unreal은 engines.tsv의 test_root가 `Source/<Module>/Private/Tests`로 자리표시째 해석된다.
+  # 테스트 폴더를 만든 뒤 test_root: "Source/<모듈>/Private/Tests"를 적는다(없는 폴더는 invalid)
 
 commands:                   # 실제로 실행되는 명령. 스킬이 빌드·실행 관찰에 사용한다
   build: "<빌드 명령>"
@@ -91,9 +93,10 @@ commands:                   # 실제로 실행되는 명령. 스킬이 빌드·�
 
 1. 엔진, 언어, 코드 루트, 테스트 루트
 2. 협업 규칙: 쓰기 전에 확인한다, 커밋은 요청이 있을 때만 한다
-3. 세션 체크포인트 위치: `production/session-state/active.md`. 읽기는 자동이고 갱신은 `/checkpoint`를 실행할 때만 한다. "매 세션 진행 상황을 갱신하라" 같은 지시는 넣지 않는다(§7)
+3. 세션 체크포인트 위치: `production/session-state/active.md`. 읽기는 자동이고 갱신은 `/checkpoint`를 실행할 때만 한다. 핵심 경로(§6.1)를 들인 뒤에는 `dev-story`·`story-done`이 Story 작업을 마칠 때도 쓰므로 이 문장을 함께 고친다. "매 세션 진행 상황을 갱신하라" 같은 지시는 넣지 않는다(§7)
 4. 검증 원칙(§8)의 요약 세 줄
 5. 상세 문서는 필요할 때 읽는다는 안내. `@` import는 매 세션 꼭 필요한 짧은 문서에만 쓴다
+6. (핵심 경로를 들인 뒤) 작업 흐름 한 단락: brief(`/brief-from-doc` 또는 `/brainstorm`) → `/create-stories` → `/dev-story` → `/story-done`. 기획서가 따로 있으면 brief는 기획서에서 뽑은 한 장이고 기획서를 대신하지 않으며, 기획서를 고친 뒤에는 `/brief-from-doc`을 다시 실행한다고 적는다
 
 원본에서 빼는 것:
 
@@ -176,10 +179,37 @@ Windows에서는 훅이 Git Bash로 실행된다. Git Bash가 없으면 훅이 �
 
 | 단계 | 스킬 | 가져올 파일 | 비고 |
 |---|---|---|---|
-| 기획 입력 | `brainstorm` 또는 직접 작성 | `SKILL.md`, `templates/game-brief.md` | 이미 기획서가 있으면 새 아이디어 질문은 건너뛰고 기획서에서 Features·Build order만 뽑는다. 기획서를 brief로 덮어쓰지 않는다 |
+| 기획 입력 (기획서 있음) | **`brief-from-doc`** (로컬 추가) | `SKILL.md`, `templates/game-brief.md` | 직접 쓴 기획서에서 brief 한 장을 뽑는다. 새 컨셉을 묻지 않는다. 기획서를 고친 뒤 다시 실행하면 추가 후보만 제안한다(§6.1.1) |
+| 기획 입력 (아이디어만 있음) | `brainstorm` (원본 그대로) | `SKILL.md`, `templates/game-brief.md` | 컨셉 후보 2~3개를 고르는 질문부터 시작해 brief를 대화로 채운다 |
 | 작업 분할 | `create-stories` | `SKILL.md`, `CONTRACT.md` | `EPIC.md`와 Stories 표를 스스로 만든다. `create-epics`가 따로 필요하지 않다 |
 | 구현 | `dev-story` | `SKILL.md`, `CONTRACT.md`, `references/engine-checks.md`, `references/version-mismatch.md` | 프로그래머 위임 → 엔진 검토 → 빌드 → 실행·스크린샷 → 체크포인트 갱신 |
 | 종료 | `story-done` | `SKILL.md`, `CONTRACT.md`, `references/tech-debt-row.md` | 완료 판정, Status 갱신, 다음 Story 안내. `review-gates.md`는 gate를 실행할 때만, `sprint-next.md`는 스프린트 계획이 있을 때만 읽으므로 1인 구성에서는 빼도 된다 |
+
+#### 6.1.1 기획서가 이미 있을 때: `/brief-from-doc`
+
+원본에서 brief를 쓰는 스킬은 셋인데, 직접 쓴 기획서를 입력으로 받는 것은 없다.
+
+| 원본 스킬 | 기획서가 있을 때 맞지 않는 이유 |
+|---|---|
+| `brainstorm` | 1단계가 매번 컨셉 후보 2~3개를 고르게 한다("every run asks"). 정해진 컨셉을 건너뛰는 분기가 없다. 또 템플릿 규칙대로 `In your words`에 긴 문서를 통째로 넣으면 기획서와 같은 내용이 두 곳에 생긴다 |
+| `prototype` | brief를 쓴 뒤 플레이 가능한 시제품까지 만드는 것이 본업이다 |
+| `reverse-document brief` | 이미 있는 코드나 시제품에서 거꾸로 쓴다. 코드가 없으면 쓸 수 없다 |
+
+그래서 brainstorm은 원본 그대로 두고 별도 스킬을 만들었다.
+위치: [.claude/skills/brief-from-doc/SKILL.md](../.claude/skills/brief-from-doc/SKILL.md). checkpoint처럼 로컬에서 추가한 스킬이라 `studio-tests/catalog.yaml`과 README의 스킬 수에는 넣지 않았다.
+
+| 항목 | 동작 |
+|---|---|
+| 실행 | `/brief-from-doc <기획서 경로>`. 경로가 없으면 `Doc/`, `docs/`, `design/`에서 후보를 찾아 묻는다 |
+| 원본 관계 | 기획서가 원본이고 brief는 요약이다. `In your words`에는 기획서를 복사하지 않고 `Source: <경로> · git <해시> · <날짜>` 한 줄만 둔다. 기획서는 어떤 경우에도 쓰지 않는다 |
+| 형식 | 템플릿의 영어 heading을 그대로 쓴다(`/create-stories`, `/story-done`, `/cut`이 이 이름으로 읽는다). 제목은 영문이고 기본값은 `project.name`이다. `/create-stories`가 제목으로 epic 폴더 이름을 만든다 |
+| Features | 7개 이하. 각 줄에 기획서의 수치·조건·출처 절을 넣는다. `/create-stories`는 brief만 읽으므로, 줄에 규칙이 없으면 인수 기준을 지어내게 된다 |
+| 출처 표시 | 기획서에 그대로 있으면 표시 없음, 이끌어 냈으면 `*(inferred (strong))*`, 없는데 필수 필드라 제안했으면 `*(guessed)*`. 선택 필드는 기획서에 없으면 비운다. 초안 아래에 필드별 출처 표, guessed 필드, 비운 필드를 붙인다 |
+| `Your systems` | 비워 둔다. 채우면 `/create-stories`가 thin/deepen Story와 `/design-system`을 요구하는 경로로 바뀐다 |
+| 다시 실행 | 해시가 같으면 `UNCHANGED`로 끝난다. 바뀌었으면 추가·수정 후보만 before → after로 보여준다. `[x]`, `cut`, `Keep`, 사용자가 직접 고친 줄은 건드리지 않는다 |
+| 쓰기 | 초안과 출처 표를 보여준 뒤 허락을 받고 쓴다. 끝은 `COMPLETE`, `UNCHANGED`, `NOT WRITTEN — <이유>` 가운데 하나다 |
+
+확인한 것: `git hash-object`가 기획서 한 글자 변경도 감지하고, 없는 파일에는 exit 128로 실패한다. 스킬 전체를 실제 기획서로 실행해 본 확인은 아직 없다. `skill-lint.sh`의 check4는 영어 문구("May I write" 등)만 세므로, 한국어로 쓰기 전에 묻는 이 스킬과 checkpoint는 0으로 나온다.
 
 필요해지면 하나씩 추가한다.
 
@@ -213,9 +243,11 @@ Windows에서는 훅이 Git Bash로 실행된다. Git Bash가 없으면 훅이 �
 
 위임할 때는 입력(읽을 파일·절), 쓰기 범위, 산출물 경로, 판정의 뜻(PASS·FAIL·NOT ASSESSED)을 명시한다. 같은 파일을 두 역할이 동시에 고치게 하지 않는다.
 
+역할 파일의 "Reports to"·위임 대상에는 들이지 않은 역할(lead-programmer, technical-director, Unreal의 `ue-*` 하위 전문가 등)이 그대로 남는다. `dev-story`에서 엔진 역할은 읽기 전용 검토만 하므로 영향은 작지만, 해당 영역(복제·UMG·GAS) 작업이 잦아지면 그 하위 전문가를 추가한다.
+
 ### 6.3 규칙
 
-규칙은 경로가 맞는 파일을 **읽을 때만** 로드된다. 새 파일만 쓰는 경우에는 규칙이 로드되지 않을 수 있으므로, 쓰기 스킬에서 해당 규칙을 직접 읽도록 연결한다. 원본의 경로 패턴(`src/gameplay/**`, `Source/**/Gameplay/**` 등)은 기능 폴더 이름을 전제로 하므로 **자기 코드 루트에 맞게 다시 쓴다.**
+규칙은 경로가 맞는 파일을 **읽을 때만** 로드된다. 새 파일만 쓰는 경우에는 규칙이 로드되지 않을 수 있으므로, 쓰기 스킬에서 해당 규칙을 직접 읽도록 연결한다. 구체적으로는 `dev-story/SKILL.md` Phase 5의 **Sources** 목록에 "작성 전에 읽을 규칙 파일 경로"를 한 항목으로 추가한다. 원본의 경로 패턴(`src/gameplay/**`, `Source/**/Gameplay/**` 등)은 기능 폴더 이름을 전제로 하므로 **자기 코드 루트에 맞게 다시 쓴다.** 모듈이 하나이고 기능 폴더를 아직 정하지 않았다면 `Source/<모듈>/**/*.{h,cpp}`처럼 코드 루트 전체에 건다.
 
 | 규칙 | 판단 |
 |---|---|
@@ -245,6 +277,8 @@ Windows에서는 훅이 Git Bash로 실행된다. Git Bash가 없으면 훅이 �
 
 나머지 스크립트(스프린트, 버그 집계, 레지스트리, 단계 판정, 스킬 lint, 출시 등)는 해당 스킬을 들일 때 함께 가져온다.
 
+**줄바꿈 고정:** helper를 들일 때 `.gitattributes`도 함께 가져온다. 최소한 `*.sh`, `*.awk`, `*.tsv`, `.claude/**/*.md`에 `text eol=lf`를 건다. Windows의 `core.autocrlf=true` 저장소에서 이 설정이 없으면 작업 사본은 멀쩡하다가 다음 clone·checkout 때 스크립트가 CRLF로 바뀐다. 그러면 Git Bash 훅과 helper가 깨지고, `engines.tsv`의 마지막 열에는 `\r`이 붙는다. 들인 뒤 `git check-attr eol -- <파일>`이 `lf`인지 확인한다.
+
 ### 6.5 템플릿과 참조 문서
 
 | 파일 | 역할 |
@@ -257,8 +291,12 @@ Windows에서는 훅이 Git Bash로 실행된다. Git Bash가 없으면 훅이 �
 | `docs/error-recovery-protocol.md` | 실패·중단 시 보고 형식 |
 | `docs/code-root-resolution.md` | 코드 루트 해석 |
 | `docs/config-resolution.md`, `docs/automation-modes.md`, `docs/workflow-modes.md` | 방법 A일 때 설정 해석 계약 |
+| `docs/coding-standards.md` | Story 종류별 증거 기준의 근거 문서. `story-done`·`run-and-observe`·`test-evidence` 템플릿이 참조한다. 참조용으로만 두고 CLAUDE.md에 import하지 않는다 |
+| **`docs/engine-reference/<엔진>/`** (저장소 루트의 `docs/`, `.claude/` 밖) | 쓰는 엔진 폴더 하나. `create-stories`가 Story의 Risk 필드를 `VERSION.md`에서 읽고, `dev-story`의 엔진 검토와 엔진 역할이 API를 이 폴더와 대조한다. 없으면 Risk는 NOT ASSESSED가 되고 엔진 검토는 근거 없이 학습 데이터에 기댄다 |
 
 ADR이나 버그 템플릿은 해당 스킬을 들일 때 추가한다. `templates/` 폴더 전체를 복사하지 않는다.
+
+들인 뒤에는 설치한 스킬·역할·문서가 참조하는 `.claude/…` 경로를 모아 대상에 없는 것을 찾는다. 남은 누락이 minimal에서 실행되지 않는 분기(ADR, director gate)나 다른 엔진용인지 하나씩 확인한다.
 
 ---
 
@@ -342,7 +380,7 @@ ADR이나 버그 템플릿은 해당 스킬을 들일 때 추가한다. `templat
 |---|---|---|
 | 1 | `project.yaml`, `CLAUDE.md`, settings의 deny 병합 | `commands.build`와 `commands.run`을 한 번씩 직접 실행해 결과를 확인함 |
 | 2 | 세션 복원(§7): 축소 session-start, session-state, 템플릿, `/checkpoint` | `/checkpoint`로 저장한 내용이 resume·compact 뒤에 출력되고, 새로 연 세션에는 출력되지 않음. 질문만 오간 세션에서는 active.md가 바뀌지 않음. §7의 실패 사례도 확인함 |
-| 3 | 핵심 경로(§6.1~6.5): brief → create-stories → dev-story → story-done | 실제 Story 하나를 구현, 실행, 스크린샷, 종료까지 진행함. 입력이 없을 때와 검증이 실패할 때 성공으로 보고되지 않음 |
+| 3 | 핵심 경로(§6.1~6.5): brief → create-stories → dev-story → story-done | 실제 Story 하나를 구현, 실행, 스크린샷, 종료까지 진행함. 입력이 없을 때와 검증이 실패할 때 성공으로 보고되지 않음. 이 확인은 **대상 프로젝트 폴더에서 연 세션**에서 한다. 다른 폴더에서 연 세션에는 대상의 스킬·훅·deny가 로드되지 않고, `dev-story`·`story-done`은 `disable-model-invocation`이라 사용자가 직접 입력해야 한다 |
 | 4 | 선택 스킬·역할·규칙 | 필요가 생긴 시점에 하나씩 추가하고, 추가할 때마다 그 스킬의 helper·템플릿을 함께 가져옴 |
 | 5 | (선택) 방법 B로 이동 | 쓰는 스킬이 굳어진 뒤 모드 분기를 제거함. automation 분기와 검증 단계는 남아 있음 |
 
