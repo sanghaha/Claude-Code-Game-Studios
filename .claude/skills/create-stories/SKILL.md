@@ -237,6 +237,16 @@ UI last. For each story:
   proposal: Phase 6 shows it and the user can change it. `/story-readiness` fails
   a story whose Estimate is still the template's bracket, so never leave it.
 
+**Each criterion is checkable when its story is done.** Before keeping a
+criterion, name every object, system or state it needs (an obstacle, the train,
+a placed track, a timer). Each must exist in this story or an earlier one in
+build order. When one is made only by a later story, split the criterion: this
+story keeps the part it can check alone (e.g. "collision channels are
+defined"), and the part that needs the later object goes to the first story
+that creates it, phrased as that story's own criterion. A brief item that
+bundles rules across features (collision, sync, fail events) is the usual
+source: spread it, never park it on the first story.
+
 ## Phase 5: QA lead review
 
 Read the `review_gate` line above. `skill-gates=skip` (solo or lean): no review;
@@ -264,6 +274,7 @@ Story 003: [title] — Visual/Feel — ADR-0001 — Ready — Estimate S
   Evidence required: retained screenshot + sign-off in production/qa/evidence/[slug]-evidence.md
 
 [N stories: N Logic, N Integration, N Visual/Feel, N UI, N Config/Data; N Blocked]
+Moved criteria: [Story NNN → Story MMM: <criterion>, one per line | none]
 QL-STORY-READY: [skipped — Solo mode | its verdicts]
 ```
 
